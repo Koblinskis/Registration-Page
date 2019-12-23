@@ -11,7 +11,7 @@
         @keyup="checkUsername"
         @focus="focusUsername = true"
         @blur="focusUsername = false">
-        <small v-if="focusUsername">Must be 4-16 characters and no spaces</small>
+        <small v-if="focusUsername">Must be 4-16 characters and no spaces{{this.inputName.charCodeAt(0)}}</small>
       </div>
       <div class="form-group">
         <label for="inputEmail">Email address</label>
@@ -47,7 +47,7 @@
         @keyup="samePassword">
       </div>
       <button type="submit" class="btn btn-primary"
-      v-if="correctEmail && correctPassword && correctUsername">Submit</button>
+      v-if="correctPassword && correctUsername && correctEmail">Submit</button>
     </form>
   </div>
 </template>
@@ -59,7 +59,7 @@ export default {
       focusUsername: false,
       focusEmail: false,
       focusPassword: false,
-      inputName: ' ',
+      inputName: '',
       inputEmail: '',
       inputPassword: '',
       inputConfirmPassword: '',
@@ -67,40 +67,49 @@ export default {
       correctUsername: false,
       correctEmail: false,
       correctLetter: false,
+      atSymbol: false,
       uLetter: [],
       eLetter: [],
     }
   },
   methods: {
     samePassword() {
+      if(this.inputPassword.length >=6 && this.inputPassword.length <= 24){
       if(this.inputPassword === this.inputConfirmPassword) {
         this.correctPassword = true
       } else {
         this.correctPassword = false
       }
+      }else {
+        this.correctPassword = false
+      }
     },
     checkUsername() {
-      this.uLetter = this.inputName.split('')
-      if(this.uLetter.length > 4 && this.uLetter.length < 16) {
-        this.uLetter.forEach(element => {
-          if(element.charCodeAt(0) >= 33 && element.charCodeAt(0) <= 126){
+      if(this.inputName.length >= 4 && this.inputName.length <= 16) {
+        if(this.inputName.search(' ') !== -1) {
+            this.correctUsername = false
+        } else {
+          if(this.inputName.charCodeAt(0) >= 33 && this.inputName.charCodeAt(0) <= 126) {
+          
             this.correctUsername = true
           } else {
-            return this.correctUsername = false
+            this.correctUsername = false
           }
-        })
+        }
+        
+      } else {
+        this.correctUsername = false
       }
     },
     checkEmail() {
-      this.eLetter = this.inputEmail.split('')
-      if(this.eLetter.length !== 0) {
-        this.eLetter.forEach(element => {
-          if(element.charCodeAt(0) !== 64){
-            this.correctEmail = false
-          } else {
-            return this.correctEmail = true
-          }
-        })
+      if(this.correctEmail === false) {
+        if(this.inputEmail.search('@') !== -1) {
+          this.correctEmail = true
+        }
+      }else if(this.correctEmail === true){
+        if(this.inputEmail.search('@') === -1) {
+          this.correctEmail = false
+        }
       }
     }
   }
