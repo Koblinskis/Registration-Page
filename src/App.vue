@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="cat">
     <div class="header">
-      <h1>Registrator Here</h1>
+      <h1>Register Here</h1>
     </div>
     <div class="box">
       <registration></registration>

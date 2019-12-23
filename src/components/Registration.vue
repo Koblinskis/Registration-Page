@@ -5,6 +5,7 @@
         <label for="inputUsername">Username</label>
         <input type="text" 
         class="form-control" 
+        :class="{'is-invalid': !correctUsername || inputName === ''}"
         id="inputUsername"
         placeholder="Enter Username"
         v-model="inputName"
@@ -18,7 +19,8 @@
       <div class="form-group">
         <label for="inputEmail">Email address</label>
         <input type="email" 
-        class="form-control" 
+        class="form-control"
+        :class="{'is-invalid': !correctEmail || inputEmail === ''}"
         id="inputEmail"
         placeholder="Enter email" 
         v-model="inputEmail"
@@ -31,6 +33,7 @@
         <label for="inputPassword">Password</label>
         <input type="password" 
         class="form-control" 
+        :class="{'is-invalid': !samePassword || inputPassword === ''}"
         id="inputPassword" 
         placeholder="Password"
         v-model="inputPassword"
@@ -46,10 +49,11 @@
         id="confirmPassword" 
         placeholder="Confirm Password"
         v-model="inputConfirmPassword"
+        :class="{'is-invalid': !samePassword || inputConfirmPassword === ''}"
         @keyup="samePassword">
       </div>
       <button type="submit" class="btn btn-primary"
-      v-if="correctPassword && correctUsername && correctEmail">Submit</button>
+      :disabled="!(correctPassword && correctUsername && correctEmail)">Submit</button>
     </form>
   </div>
 </template>
