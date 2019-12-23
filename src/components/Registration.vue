@@ -9,9 +9,11 @@
         placeholder="Enter Username"
         v-model="inputName"
         @keyup="checkUsername"
-        @focus="focusUsername = true"
+        @keydown="checkUsername"
+        @keypress="checkUsername"
+        @focus="focusUsername = true && checkUsername"
         @blur="focusUsername = false">
-        <small v-if="focusUsername">Must be 4-16 characters and no spaces{{this.inputName.charCodeAt(0)}}</small>
+        <small v-if="focusUsername">Must be 4-16 characters and no spaces</small>
       </div>
       <div class="form-group">
         <label for="inputEmail">Email address</label>
@@ -89,11 +91,13 @@ export default {
         if(this.inputName.search(' ') !== -1) {
             this.correctUsername = false
         } else {
-          if(this.inputName.charCodeAt(0) >= 33 && this.inputName.charCodeAt(0) <= 126) {
-          
-            this.correctUsername = true
-          } else {
-            this.correctUsername = false
+          for(let i = 0; i < this.inputName.length; i++) {
+            if(this.inputName.charCodeAt(i) >= 33 && this.inputName.charCodeAt(i) <= 126) {
+              this.correctUsername = true
+            } else {
+              this.correctUsername = false
+              break;
+            }
           }
         }
         
