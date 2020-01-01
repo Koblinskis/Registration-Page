@@ -1,35 +1,12 @@
 const express = require('express')
-const mongoose = require('mongoose')
 require('./db/mongoose')
-const validator = require('validator')
+const User = require('./models/user')
 
 const app = express()
 const port = process.env.PORT || 3000
 app.use(express.json())
 
-const User = mongoose.model('User', {
-  name: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  email: {
-    type: String,
-    required: true,
-    trim: true,
-    lowercase: true,
-    validate(value) {
-      if (!validator.isEmail(value)){
-        throw new Error('Email is Invalid')
-      }
-    }
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 6
-  }
-})
+
 
 app.post('/register', async (req, res) => {
   const user = new User(req.body)
