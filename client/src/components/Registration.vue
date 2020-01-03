@@ -64,8 +64,8 @@
       </div>
 
       <button type="submit" class="btn btn-primary"
+      :disabled="!(correctPassword && correctUsername && correctEmail)"
       @click="createUser()">Submit</button>
-      <!--:disabled="!(correctPassword && correctUsername && correctEmail)"-->
     </form>
   </div>
 </template>
@@ -143,14 +143,13 @@ export default {
     //Method for sending a post request to the server to create a user
     async createUser() {
       try{
-        window.console.log(this.axios)
         await this.axios({
           method: 'post',
           url: 'http://localhost:3000/register',
           data: {
-            name: "testss",
-            email: "test@ss.com",
-            password: "testss"
+            name: this.inputName,
+            email: this.inputEmail,
+            password: this.inputPassword
           }
         })
       }
