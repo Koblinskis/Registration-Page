@@ -1,3 +1,5 @@
+//Starts the server up
+
 const express = require('express')
 require('./db/mongoose')
 const regRouter = require('./routers/register')

@@ -1,5 +1,11 @@
+//Sets Vue up for the app
+
 import Vue from 'vue'
 import App from './App.vue'
+import VueAxios from 'vue-axios'
+import axios from 'axios'
+
+Vue.use(VueAxios, axios)
 
 Vue.config.productionTip = false
 
